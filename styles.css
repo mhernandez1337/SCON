@@ -1,0 +1,1010 @@
+
+body {
+    height: 100%;
+    width: 100%;
+    font-family: Muli,Helvetica,Arial,sans-serif;
+    background-color: #d1d1d1;
+    margin: 0;
+}
+
+a {
+    cursor: pointer;
+}
+
+a.disabled {
+    pointer-events: none;
+    cursor: default;
+    color: gray;
+}
+
+.show-div {
+    display: block !important;
+}
+
+.remove-div {
+    display: none !important;
+}
+
+@media (min-width: 1100px){
+    .container {
+        /* width: 1100px; */
+        margin: 0 auto;
+        background-color: white;
+
+    }
+
+    #dynamic-table-wrapper {
+        padding: 40px 20px;
+    }
+
+    table {
+        /* border-collapse: collapse; */
+        display: block;
+        margin: 1.5rem 0;
+    }
+
+    .dynamic-table-header {
+        background-color: #00629d;
+        border-bottom-color: #00629d;
+        color: #fff;
+        border-bottom: 0.0625rem solid #333;
+    }
+
+    .dynamic-table-header > th {
+        font-weight: 700;
+        padding: 0.75rem 1.25rem;
+    }
+
+    td {
+        padding: 0.45rem 0.75rem !important;
+        font-size: 0.875em !important;
+    }
+
+    tr {
+        border-bottom: 0.0625rem solid #d3d3d3;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f2
+    }
+
+    #stats-table > tbody > tr > td:nth-child(2), #stats-table > tbody > tr > td:nth-child(3){
+        text-align: center;
+    }
+
+    #total-non-traffic-file-1, #total-non-traffic-file-2, #total-non-traff-disp-1, #total-non-traff-disp-2 {
+        font-style: italic;
+    }
+
+    #overall-clearance-rate-1, #overall-clearance-rate-2, #grand-total-dispo-1, #grand-total-dispo-2, #grand-total-filings-1, #grand-total-filings-2 {
+        font-weight: bold;
+    }
+
+    table, th, td {
+        border: 0px solid black;
+    }
+    
+    .table-link {
+        color: #125b91;
+        transition: .5s;
+    }
+
+    .table-link:hover {
+        color: #00629d;
+        text-decoration: none;
+    }
+
+    #stats-table {
+        width: 100%;
+        max-width:650px;
+        border: solid 1px #ddd;
+        background: white;
+        border-collapse: separate !important;
+        overflow-x: hidden !important;
+    }
+
+    #title-column-court-1, #title-column-court-2 {
+        min-height: 10px;
+        height:100%;
+        max-height: 55px;
+        padding:7px 0;
+        
+    }
+
+    #title-column-fiscal-year, #title-column-court-1, #title-column-court-2 {
+        font-size: 0.875em;
+        color: #222;
+        border-bottom: none !important;
+    }
+
+    .courtMap {
+        flex-basis: 33.33333%;
+        margin: 0px 25px;
+        width: 400px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* Statistics */
+    .stats-page-container {
+        width: 100%;
+        margin: 0 auto;
+        background-color: white;
+    }
+    #statistics-wrapper {
+        display: flex;
+        flex-direction: column;
+        background: #f2f2f2;
+    }
+
+    .statistics-table-wrapper {
+        display: flex;
+        /* align-items: center; */
+        padding: 40px 0;
+    }
+
+    .statistics-table-wrapper:nth-child(1){
+        /* margin-bottom: 40px; */
+    }
+
+    .statistics-table {
+        /* width: 100% */
+    }
+
+    #variable-selection {
+        display: flex;
+        flex-direction: column;
+        margin-right:15px;
+        width: 315px;
+    }
+
+    .var-year-select {
+        display: flex;
+        align-items: center;
+        margin-bottom: 5px;
+    }
+
+    #var-header > p {
+        margin: 0 0 5px;
+    }
+
+    .var-year-select > p {
+        margin: 0 5px 5px 0;
+    }
+
+    .court-list {
+        border: 1px solid black;
+        width: 300px;
+        padding: 5px;
+        background-color: #fff;
+        overflow: auto;
+        height: 650px;
+    }
+
+    #input-btns {
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        margin-bottom: 10px;
+    }
+
+    #input-btns > input {
+        padding: 2px 10px;
+        font-size: 11pt;
+    }
+
+    .court-list > label {
+        font-size: small;
+    }
+
+    .court-list > p {
+        margin:0px;
+    }
+
+    #chart-type {
+        display: flex;
+        margin-bottom: 5px;
+    }
+
+    .hide-div {
+        visibility: hidden;
+    }
+
+    /* Chart Statistics */
+    .highcharts-figure,
+    .highcharts-data-table table {
+        /* min-width: 360px; */
+        width: 700px;
+        margin: 1em auto;
+    }
+    
+
+    .highcharts-data-table table {
+        font-family: Verdana, sans-serif;
+        border-collapse: collapse;
+        border: 1px solid #ebebeb;
+        margin: 10px auto;
+        text-align: center;
+        width: 100%;
+        /* max-width: 500px; */
+        overflow-x: visible !important;
+    }
+
+    .highcharts-data-table caption {
+        padding: 1em 0;
+        font-size: 1.2em;
+        color: #555;
+    }
+
+    .highcharts-data-table th {
+        font-weight: 600;
+        padding: 0.5em;
+    }
+
+    .highcharts-data-table td,
+    .highcharts-data-table th,
+    .highcharts-data-table caption {
+        padding: 0.5em !important;
+        border-bottom: none !important;
+        text-align: center !important;
+    }
+
+    .highcharts-data-table thead tr,
+    .highcharts-data-table tr:nth-child(even) {
+        background: #f8f8f8;
+    }
+
+    .highcharts-data-table tr:hover {
+        background: #f1f7ff;
+    }
+
+    .highcharts-menu-item {
+        position: static !important;
+    }
+
+    /* Loading Spinner */
+    /* Safari */
+    @-webkit-keyframes spin {
+        0% { -webkit-transform: rotate(0deg); }
+        100% { -webkit-transform: rotate(360deg); }
+    }
+    
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+    .statistics-table {
+        position: relative !important;
+    }
+
+    .loader {
+        border: 16px solid #f3f3f3;
+        border-radius: 50%;
+        border-top: 16px solid #00629d;
+        width: 120px;
+        height: 120px;
+        -webkit-animation: spin 2s linear infinite; /* Safari */
+        animation: spin 2s linear infinite;
+        position: absolute;
+        margin: 0 auto;
+        right: 0;
+        left: 0;
+        top: 33%;
+        z-index: 10000;
+    }
+    
+    .display-none {
+        display: none !important;
+    }
+
+    .add-opacity {
+        opacity: 0.5 !important;
+    }
+
+    /* Nevada Judicial History Database */
+
+    #judicial-history-wrapper {
+        padding: 40px 0;
+    }
+
+    #judicial-history-description {
+        width: 450px;
+    }
+
+    .criteria-input {
+        display: flex;
+        flex-direction: column;
+    }
+
+    #text-search-criteria {
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+    }
+
+    .criteria-search {
+        display: flex;
+        flex-direction: column;
+        /* height: 300px; */
+        justify-content: space-evenly;
+        border: solid 1px;
+        background: white;
+        padding: 15px;
+        position:relative;
+    }
+
+    .criteria-search > h2 {
+        margin: 5px 0;
+    }
+
+    #judicial-history-description {
+        --pnp-typeface-margin: 0.625rem;
+        font-size: 1.125rem;
+        font-weight: 400;
+        line-height: 1.625rem;
+        width: 455px;
+    }
+
+    #judicial-history-description > a {
+        text-decoration: none;
+        color: #0f4d7a;
+    }
+
+    .criteria-input > label {
+        font-weight: bolder;
+        line-height: 1.4;
+        --pnp-typeface-margin: 0.625rem;
+        font-size: 1.125rem;
+    }
+
+    .criteria-input> input[type=text], select {
+        width: 100%;
+        padding: 5px 10px;
+        margin-bottom: 10px;
+        display: inline-block;
+        border: 1px solid black;
+        border-radius: 3px;
+        box-sizing: border-box;
+    }
+
+    .criteria-input > input[type=submit] {
+        --pnp-typeface-margin: 0.625rem;
+        background: none;
+        background-color: #0a7299;
+        border: 0.0625rem solid #0a7299;
+        color: inherit;
+        color: #fff;
+        cursor: pointer;
+        display: inline-block;
+        font: inherit;
+        font-size: 1.125rem;
+        font-weight: 400;
+        line-height: inherit;
+        line-height: 1.625rem;
+        outline-offset: 0.1875rem;
+        overflow: visible;
+        padding: 0.5rem 1rem;
+        text-align: inherit;
+        text-align: center;
+        text-decoration: none;
+        transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+        vertical-align: middle;
+    }
+
+    #judicial-history-table-wrapper {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        position: relative;
+        width: fit-content;
+        margin: 0 auto;
+    }
+
+    #judicial-history-table {
+        border-collapse:collapse; 
+        visibility:hidden; 
+        height:342px; 
+        margin:40px auto 10px; 
+        border: 1px solid #f2f2f2; 
+        width: 100%;
+    }
+
+    #judicial-table-header {
+        color:White;
+        background-color:#184463;
+        font-weight:bold;
+    }
+
+    #judicial-table-header > th {
+        padding: 5px 0;
+    }
+
+    .next-table {
+        background: #fff;
+        margin-bottom: 1.25em;
+        border: solid 1px #ddd;
+        width: fit-content;
+        margin: 5px;
+    }
+
+    .btn-wrapper {
+        width:100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.5rem;
+    }
+
+    .next-btn {
+        font-family: "Muli", "Helvetica", Helvetica, Arial, sans-serif;
+        color: #0f4d7a;
+        text-decoration: underline;
+        font-weight: 600;
+        margin-right:30px;
+        text-decoration: none;
+        cursor: pointer;
+        border: 0.0625rem solid #d3d3d3;
+        padding: 5px 14px;
+        width: 100px;
+        text-align: center;
+    }
+
+    .previous-btn {
+        font-family: "Muli", "Helvetica", Helvetica, Arial, sans-serif;
+        color: #0f4d7a;
+        text-decoration: underline;
+        font-weight: 600;
+        margin-left:30px;
+        text-decoration: none;
+        cursor: pointer;
+        border: 0.0625rem solid #d3d3d3;
+        padding: 5px 14px;
+        width: 100px;
+        text-align: center;
+    }
+
+    .view-info-btn {
+        cursor: pointer;
+        font-family: "Muli", "Helvetica", Helvetica, Arial, sans-serif;
+        color: #0f4d7a;
+        /* text-decoration: underline; */
+        font-weight: 600;
+    }
+
+    #view-more-wrapper {
+        display: none;
+        /* height:410px; */
+        margin: 40px 20px 40px;
+        padding: 20px 40px 20px;
+        background: #f2f2f2;
+        width: 950px;
+        border: 1px solid black;
+        border-radius: 3px;
+    }
+
+    #view-more-info {
+        display: flex;
+        flex-direction: column;
+    }
+
+    #judge-info-container {
+        display: flex;
+    }
+
+    .judge-info-p:nth-child(1){
+        margin-right: 40px;
+    }
+
+    .back-btn {
+        padding: 10px 20px;
+        background: #0a7299;
+        color: white;
+        font-weight: bold;
+        display: block;
+        width: fit-content;
+    }
+
+}
+
+
+@media (max-width: 1099px){
+    .container {
+        width: 100%;
+        margin: 0 auto;
+        background-color: white;
+
+    }
+
+    #dynamic-table-wrapper {
+        padding: 40px 20px;
+    }
+
+    table {
+        /* border-collapse: collapse; */
+        display: block;
+        margin: 1.5rem 0;
+    }
+
+    .dynamic-table-header {
+        background-color: #00629d;
+        border-bottom-color: #00629d;
+        color: #fff;
+        border-bottom: 0.0625rem solid #333;
+    }
+
+    .dynamic-table-header > th {
+        font-weight: 700;
+        padding: 0.75rem 1.25rem;
+    }
+
+    td {
+        padding: 0.45rem 0.75rem !important;
+        font-size: 0.875em !important;
+    }
+
+    tr {
+        border-bottom: 0.0625rem solid #d3d3d3;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f2
+    }
+
+    #stats-table > tbody > tr > td:nth-child(2), #stats-table > tbody > tr > td:nth-child(3){
+        text-align: center;
+    }
+
+    #total-non-traffic-file-1, #total-non-traffic-file-2, #total-non-traff-disp-1, #total-non-traff-disp-2 {
+        font-style: italic;
+    }
+
+    #overall-clearance-rate-1, #overall-clearance-rate-2, #grand-total-dispo-1, #grand-total-dispo-2, #grand-total-filings-1, #grand-total-filings-2 {
+        font-weight: bold;
+    }
+
+    table, th, td {
+        border: 0px solid black;
+    }
+    
+    .table-link {
+        color: #125b91;
+        transition: .5s;
+    }
+
+    .table-link:hover {
+        color: #00629d;
+        text-decoration: none;
+    }
+
+    #stats-table {
+        width: 100%;
+        /* max-width:650px; */
+        border: solid 1px #ddd;
+        background: white;
+        border-collapse: separate !important;
+        overflow-x: auto !important;
+        white-space: normal !important;
+    }
+
+    #title-column-court-1, #title-column-court-2 {
+        min-height: 10px;
+        height:100%;
+        max-height: 55px;
+        padding:7px 0;
+        
+    }
+
+    #title-column-fiscal-year, #title-column-court-1, #title-column-court-2 {
+        font-size: 0.875em;
+        color: #222;
+        border-bottom: none !important;
+        text-align: center;
+    }
+
+    .courtMap {
+        flex-basis: 33.33333%;
+        padding: 0px 15px;
+    }
+
+    /* Statistics */
+    .stats-page-container {
+        width: 100%;
+        margin: 0 auto;
+        background-color: white;
+    }
+
+    #statistics-wrapper {
+        display: flex;
+        flex-direction: column;
+        background: #f2f2f2;
+    }
+
+    .statistics-table-wrapper {
+        display: flex;
+        align-items: center;
+        padding: 40px 0;
+        flex-direction: column;
+        margin: 0 20px;
+    }
+
+    .statistics-table-wrapper:nth-child(1){
+        /* margin-bottom: 40px; */
+    }
+
+    .statistics-table {
+        /* width: 100% */
+    }
+
+    #variable-selection {
+        display: flex;
+        flex-direction: column;
+        /* margin-right:15px; */
+        width: 315px;
+        align-items: center;
+    }
+
+    .var-year-select {
+        display: flex;
+        align-items: center;
+        margin-bottom: 5px;
+    }
+
+    #var-header > p {
+        margin: 0 0 5px;
+    }
+
+    .var-year-select > p {
+        margin: 0 5px 5px 0;
+    }
+
+    .court-list {
+        border: 1px solid black;
+        width: 300px;
+        padding: 5px;
+        background-color: #fff;
+        overflow: auto;
+        height: 650px;
+    }
+
+    #input-btns {
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        margin-bottom: 10px;
+        width: 300px;
+    }
+
+    #input-btns > input {
+        padding: 2px 10px;
+        font-size: 11pt;
+    }
+
+    .court-list > label {
+        font-size: small;
+    }
+
+    .court-list > p {
+        margin:0px;
+    }
+
+    #chart-type {
+        display: flex;
+        margin-bottom: 5px;
+    }
+
+    .hide-div {
+        visibility: hidden;
+    }
+
+    /* Chart Statistics */
+    .highcharts-figure,
+    .highcharts-data-table table {
+        /* min-width: 360px; */
+        width: 100%;
+        margin: 1em auto;
+    }
+
+    .highcharts-data-table table {
+        font-family: Verdana, sans-serif;
+        border-collapse: collapse;
+        border: 1px solid #ebebeb;
+        margin: 10px auto;
+        text-align: center;
+        width: 100%;
+        /* max-width: 500px; */
+        overflow-x: auto !important;
+    }
+
+    .highcharts-data-table caption {
+        padding: 1em 0;
+        font-size: 1.2em;
+        color: #555;
+    }
+
+    .highcharts-data-table th {
+        font-weight: 600;
+        padding: 0.5em;
+    }
+
+    .highcharts-data-table td,
+    .highcharts-data-table th,
+    .highcharts-data-table caption {
+        padding: 0.5em !important;
+        border-bottom: none !important;
+        text-align: center !important;
+    }
+
+    .highcharts-data-table thead tr,
+    .highcharts-data-table tr:nth-child(even) {
+        background: #f8f8f8;
+    }
+
+    .highcharts-data-table tr:hover {
+        background: #f1f7ff;
+    }
+
+    .highcharts-menu-item {
+        position: static !important;
+    }
+
+    /* Loading Spinner */
+    /* Safari */
+    @-webkit-keyframes spin {
+        0% { -webkit-transform: rotate(0deg); }
+        100% { -webkit-transform: rotate(360deg); }
+    }
+    
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+    .statistics-table {
+        position: relative !important;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .loader {
+        border: 16px solid #f3f3f3;
+        border-radius: 50%;
+        border-top: 16px solid #00629d;
+        width: 120px;
+        height: 120px;
+        -webkit-animation: spin 2s linear infinite; /* Safari */
+        animation: spin 2s linear infinite;
+        position: absolute;
+        margin: 0 auto;
+        right: 0;
+        left: 0;
+        top: 33%;
+        z-index: 10000;
+    }
+    
+    .display-none {
+        display: none !important;
+    }
+
+    .add-opacity {
+        opacity: 0.5 !important;
+    }
+
+    /* Nevada Judicial History Database */
+
+    #judicial-history-wrapper {
+        /* padding: 40px 0; */
+    }
+
+    #judicial-history-description {
+        width: 450px;
+    }
+
+    #judicial-history-description > a {
+        text-decoration: none;
+        color: #0f4d7a;
+    }
+
+    .criteria-input {
+        display: flex;
+        flex-direction: column;
+    }
+
+    #text-search-criteria {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-evenly;
+        padding: 40px 20px;
+    }
+
+    .criteria-search {
+        display: flex;
+        flex-direction: column;
+        /* height: 300px; */
+        justify-content: space-evenly;
+        border: solid 1px;
+        background: white;
+        padding: 15px;
+        position:relative;
+    }
+
+    .criteria-search > h2 {
+        margin: 5px 0;
+    }
+
+    #judicial-history-description {
+        --pnp-typeface-margin: 0.625rem;
+        font-size: 1.125rem;
+        font-weight: 400;
+        line-height: 1.625rem;
+        width: 100%;
+    }
+
+    .criteria-input > label {
+        font-weight: bolder;
+        line-height: 1.4;
+        --pnp-typeface-margin: 0.625rem;
+        font-size: 1.125rem;
+    }
+
+    .criteria-input> input[type=text], select {
+        /* width: 300px; */
+        padding: 5px 10px;
+        margin-bottom: 10px;
+        display: inline-block;
+        border: 1px solid black;
+        border-radius: 3px;
+        box-sizing: border-box;
+    }
+
+    .criteria-input > input[type=submit] {
+        --pnp-typeface-margin: 0.625rem;
+        background: none;
+        background-color: #0a7299;
+        border: 0.0625rem solid #0a7299;
+        color: inherit;
+        color: #fff;
+        cursor: pointer;
+        display: inline-block;
+        font: inherit;
+        font-size: 1.125rem;
+        font-weight: 400;
+        line-height: inherit;
+        line-height: 1.625rem;
+        outline-offset: 0.1875rem;
+        overflow: visible;
+        padding: 0.5rem 1rem;
+        text-align: inherit;
+        text-align: center;
+        text-decoration: none;
+        transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+        vertical-align: middle;
+    }
+
+    #judicial-history-table-wrapper {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        position: relative;
+        width: 100%;
+        margin: 0 auto;
+        /* overflow-x: scroll; */
+    }
+
+    #judicial-history-table {
+        border-collapse:collapse; 
+        visibility:hidden; 
+        height:342px; 
+        margin: 20px 20px 10px;
+        border: 1px solid #f2f2f2; 
+        overflow-x: auto; 
+        /* width: 100%; */
+    }
+
+    #judicial-table-header {
+        color:White;
+        background-color:#184463;
+        font-weight:bold;
+    }
+
+    #judicial-table-header > th {
+        padding: 5px 0;
+    }
+
+    .next-table {
+        background: #fff;
+        margin-bottom: 1.25em;
+        border: solid 1px #ddd;
+        width: fit-content;
+        margin: 5px;
+    }
+
+    .btn-wrapper {
+        width:100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.5rem;
+    }
+
+    .next-btn {
+        font-family: "Muli", "Helvetica", Helvetica, Arial, sans-serif;
+        color: #0f4d7a;
+        text-decoration: underline;
+        font-weight: 600;
+        margin-right:30px;
+        text-decoration: none;
+        cursor: pointer;
+        border: 0.0625rem solid #d3d3d3;
+        padding: 5px 14px;
+        width: 100px;
+        text-align: center;
+    }
+
+    .previous-btn {
+        font-family: "Muli", "Helvetica", Helvetica, Arial, sans-serif;
+        color: #0f4d7a;
+        text-decoration: underline;
+        font-weight: 600;
+        margin-left:30px;
+        text-decoration: none;
+        cursor: pointer;
+        border: 0.0625rem solid #d3d3d3;
+        padding: 5px 14px;
+        width: 100px;
+        text-align: center;
+    }
+
+    .view-info-btn {
+        cursor: pointer;
+        font-family: "Muli", "Helvetica", Helvetica, Arial, sans-serif;
+        color: #0f4d7a;
+        /* text-decoration: underline; */
+        font-weight: 600;
+    }
+
+    #view-more-wrapper {
+        display: none;
+        /* height:410px; */
+        margin: 40px 20px 40px;
+        padding: 20px 40px 20px;
+        background: #f2f2f2;
+        /* width: 950px; */
+        border: 1px solid black;
+        border-radius: 3px;
+    }
+
+    #view-more-info {
+        display: flex;
+        flex-direction: column;
+    }
+
+    #judge-info-container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .judge-info-p{
+        /* margin-right: 40px; */
+        margin-bottom: -15px;
+    }
+
+    .back-btn {
+        padding: 10px 20px;
+        background: #0a7299;
+        color: white;
+        font-weight: bold;
+        display: block;
+        width: fit-content;
+    }
+}
