@@ -37,15 +37,15 @@
             var filingsHighChart1;
             var filingsHighChart2;
              //Test
-             url = 'https://localhost:7019/api/Statistics/YearSelection';
+            //  url = 'https://localhost:7019/api/Statistics/YearSelection';
             //Production
-            // url = 'https://publicaccess.nvsupremecourt.us/WebSupplementalAPI/api/Statistics/YearSelection';
+            url = 'https://publicaccess.nvsupremecourt.us/WebSupplementalAPI/api/Statistics/YearSelection';
             fetch(url)
             .then((response) => response.json())
             .then((data) => {
                 yearObject = data;
-                console.log("Year", yearObject);
                 //Assign the min and max years
+                console.log("Year", yearObject);
                 minYear = yearObject[0];
                 maxYear = yearObject[1];
 
