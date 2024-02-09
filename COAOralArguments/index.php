@@ -92,7 +92,12 @@
             }
             fetchEvents = function() {
                 loaderSwitch(1);
-                fetch(coaOralArgEventsURL)
+                fetch(coaOralArgEventsURL, {
+                    method: 'GET',
+                    headers: {
+                        'XApiKey': '080d4202-61b2-46c5-ad66-f479bf40be11'
+                    },
+                })
                 .then((response) => response.json())
                 .then((data) => {
                     coaOralArgEvents = data;

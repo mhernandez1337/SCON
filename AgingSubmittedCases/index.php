@@ -12,11 +12,19 @@
     <link href="https://fonts.googleapis.com/css2?family=Asap:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
-    <title>Advance Opinions</title>
+    <title>Aging Submitted Cases</title>
 </head>
 <body>
+    <style>
+        @media (max-width: 1100px){
+            table {
+                display: block;
+                overflow-x: scroll;
+            }
+        }
+    </style>
     <script>
-        //Reference Page: https://nvcourts.gov/supreme/decisions/advance_opinions
+        //Reference Page: https://nvcourts.gov/supreme/aging_submitted_case_report
         var tableData;
         let createNewTablesHeaders = function() {
             table = document.createElement('table');
@@ -39,11 +47,31 @@
             table.appendChild(tr);
             wrapper.appendChild(table);
         }
+        let requestUrl = function(urlType, key){
+            let url = `https://publicaccess.nvsupremecourt.us/WebSupplementalAPI/api/urlRequest/${urlType}/${key}`;
+            // let url = `https://localhost:7019/api/urlRequest/${urlType}/${key}`;
+            fetch(url, {
+                method: 'GET',
+                headers: {
+                    'XApiKey': '080d4202-61b2-46c5-ad66-f479bf40be11'
+                },
+            })
+            .then((response) => response.json())
+            .then((data) => {
+                window.open(data.value);
+            });
+        }
         $(document).ready(function() {
             //Local development
-            // fetch('https://localhost:7019/api/Aging-Submitted-Case-Report')
+            // let url = `https://localhost:7019/api/Aging-Submitted-Case-Report`;
             //Production
-            fetch('https://publicaccess.nvsupremecourt.us/WebSupplementalAPI/api/Aging-Submitted-Case-Reports')
+            let url = `https://publicaccess.nvsupremecourt.us/WebSupplementalAPI/api/Aging-Submitted-Case-Report`;
+            fetch(url, {
+                method: 'GET',
+                headers: {
+                    'XApiKey': '080d4202-61b2-46c5-ad66-f479bf40be11'
+                },
+            })
             .then((response) => response.json())
             .then((data) => {
                 tableData = JSON.parse(JSON.stringify(data));
@@ -64,13 +92,14 @@
                             a = document.createElement('a');
                             td.appendChild(a);
                             tr.appendChild(td);
-                        } else if(childKey == 'caseurl'){
+                        } 
+                        else if(childKey == 'caseurl'){
                             tr.appendChild(td);
                             previousTd = td.previousElementSibling;
                             // Create the new anchor tag
                             anchor = td.previousElementSibling.children[0];
-                            anchor.setAttribute('href', childValue);
-                            anchor.setAttribute('target', "_blank");
+                            anchor.setAttribute('href', "javascript:;");
+                            anchor.setAttribute('onclick', `requestUrl("case", "${childValue}")`)
                             anchor.innerHTML = previousTd.innerHTML;
                             
                             td.remove();
@@ -95,7 +124,7 @@
     <div class="container">
         <div id="dynamic-table-wrapper">
             <p>
-                Below is a list of the cases which have been submitted to the Supreme Court for more than 90 days and which remain undecided as of September 1, 2022.
+                Below is a list of the cases which have been submitted to the Supreme Court for more than 90 days.
             </p>
         </div>
     </div>

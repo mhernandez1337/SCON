@@ -112,7 +112,12 @@
                 // loader[0].classList.remove('hide-div');
                 // calendar[0].classList.add('add-opacity');
                 loaderSwitch(1);
-                fetch(oralArgEventsURL)
+                fetch(oralArgEventsURL, {
+                    method: 'GET',
+                    headers: {
+                        'XApiKey': '080d4202-61b2-46c5-ad66-f479bf40be11'
+                    },
+                })
                 .then((response) => response.json())
                 .then((data) => {
                     oralArgEvents = data;

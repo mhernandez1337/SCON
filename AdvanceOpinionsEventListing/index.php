@@ -30,9 +30,24 @@
         }
     </style>
     <script>
-        
+        let requestUrl = function(urlType, key){
+                let url = `https://publicaccess.nvsupremecourt.us/WebSupplementalAPI/api/urlRequest/${urlType}/${key}`;
+                // let url = `https://localhost:7019/api/urlRequest/${urlType}/${key}`;
+                fetch(url, {
+                    method: 'GET',
+                    headers: {
+                        'XApiKey': '080d4202-61b2-46c5-ad66-f479bf40be11'
+                    },
+                })
+                .then((response) => response.json())
+                .then((data) => {
+                    window.open(data.value);
+                });
+            }
         $(document).ready(function() {
             let advanceOpinionsURL = `https://publicaccess.nvsupremecourt.us/WebSupplementalAPI/api/AdvanceOpinions`;
+
+            // let advanceOpinionsURL = `http://localhost:7019/api/AdvanceOpinions`;
             let advanceOpinionsEvents;
 
             var loader = document.getElementsByClassName('loader');
@@ -49,6 +64,7 @@
                 }
             }
 
+
             initializeAOEvents = function() {
                 
                 //Create the container that will hold all the events
@@ -59,10 +75,8 @@
                 var ulEvent = document.createElement('ul');
                 ulEvent.setAttribute('class', 'multicolumn-boxes-list');
 
-                console.log('test');
                 //Sort the events by most recent. 
-
-                for(let i = 0; i < 4 ; i++){
+                for(let i = 0; i < 5 ; i++){
 
                     //Create the individual li item
                     var liEvent = document.createElement('li');
@@ -71,8 +85,10 @@
                     //Create the title
                     var title = document.createElement('a');
                     title.setAttribute('class', 'multicolumn-boxes-list-link');
-                    title.setAttribute('href', advanceOpinionsEvents[i].caseurl);
-                    title.setAttribute('target', '_blank');
+                    title.setAttribute('href', "javascript:;");
+                    //title.setAttribute('href', advanceOpinionsEvents[i].caseurl);
+                    title.setAttribute('onclick', `requestUrl("case", "${advanceOpinionsEvents[i].caseurl}")`)
+                    //title.setAttribute('target', '_blank');
 
                     //Create the time element
                     var time = document.createElement('span');
@@ -96,7 +112,12 @@
                 // loader[0].classList.remove('hide-div');
                 // calendar[0].classList.add('add-opacity');
                 loaderSwitch(1);
-                fetch(advanceOpinionsURL)
+                fetch(advanceOpinionsURL, {
+                    method: 'GET',
+                    headers: {
+                        'XApiKey': '080d4202-61b2-46c5-ad66-f479bf40be11'
+                    },
+                })
                 .then((response) => response.json())
                 .then((data) => {
                     advanceOpinionsEvents = data;

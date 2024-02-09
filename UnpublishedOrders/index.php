@@ -15,6 +15,14 @@
     <title>Unpublished Orders</title>
 </head>
 <body>
+    <style>
+        @media (max-width: 1100px){
+            table {
+                display: block;
+                overflow-x: scroll;
+            }
+        }
+    </style>
     <script>
         //Reference Page: https://nvcourts.gov/supreme/decisions/unpublished_orders
         var tableData;
@@ -45,9 +53,30 @@
             //Append table to the table wrapper. From here the rest of the code will generate the table data.
             wrapper.appendChild(table);
         }
+        let requestUrl = function(urlType, key){
+            let url = `https://publicaccess.nvsupremecourt.us/WebSupplementalAPI/api/urlRequest/${urlType}/${key}`;
+            // let url = `https://localhost:7019/api/urlRequest/${urlType}/${key}`;
+            fetch(url, {
+                method: 'GET',
+                headers: {
+                    'XApiKey': '080d4202-61b2-46c5-ad66-f479bf40be11'
+                },
+            })
+            .then((response) => response.json())
+            .then((data) => {
+                window.open(data.value);
+            });
+        }
         $(document).ready(function() {
+            let url = 'https://publicaccess.nvsupremecourt.us/WebSupplementalAPI/api/UnpublishedOrders';
+            // let url = 'https://localhost:7019/api/UnpublishedOrders';
             //Fetch data from API endpoint
-            fetch('https://publicaccess.nvsupremecourt.us/WebSupplementalAPI/api/UnpublishedOrders')
+            fetch(url, {
+                method: 'GET',
+                headers: {
+                    'XApiKey': '080d4202-61b2-46c5-ad66-f479bf40be11'
+                },
+            })
             .then((response) => response.json())
             .then((data) => {
                 //Move the response data to a local variable
@@ -97,12 +126,19 @@
                             td.appendChild(a);
                             tr.appendChild(td);
                         } else if(childKey == 'docurl' || childKey == 'caseurl'){
+                            let urlType = ""
+                            if(childKey == 'docurl'){
+                                urlType = "doc";
+                            }else{
+                                urlType = "case";
+                            }
                             tr.appendChild(td);
                             previousTd = td.previousElementSibling;
                             // Create the new anchor tag
                             anchor = td.previousElementSibling.children[0];
-                            anchor.setAttribute('href', childValue);
-                            anchor.setAttribute('target', "_blank");
+                            anchor.setAttribute('href', "javascript:;");
+                            anchor.setAttribute('onclick', `requestUrl("${urlType}", "${childValue}")`)
+                            //anchor.setAttribute('target', "_blank");
                             if(childKey == 'docurl'){
                                 // let date = new Date(childValue);
                                 // console.log("Date: ", date);

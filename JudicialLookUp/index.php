@@ -52,7 +52,7 @@
             parameters = JSON.parse(JSON.stringify(data));
 
             //Each for loop iterates through each record of Judicial Positiions, Courts, Departments, and Counties.
-            //Judicial Positions
+            //Judicial Positions which is position 0 in the array
             for(var i = 0; i < parameters[0].length; i++){
                 var option = document.createElement('option');
                 option.setAttribute('value', parameters[0][i].positionName);
@@ -94,6 +94,7 @@
             nextBtn.classList.add('disabled');
             prevBtn.classList.add('disabled');
             loaderSwitch(1);
+
             //Get all the search values.
             //We check to see if a value was selected, and if not make the value null
             var fname = document.getElementById('judicial-first-name').value != "" ? document.getElementById('judicial-first-name').value  : null;
@@ -115,7 +116,10 @@
 
             fetch(url, {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
+                headers: { 
+                    "Content-Type": "application/json",
+                    'XApiKey': '080d4202-61b2-46c5-ad66-f479bf40be11' 
+                },
                 body: JSON.stringify({
                     first_name: fname,
                     last_name: lname,
@@ -132,9 +136,6 @@
                 searchData = JSON.parse(JSON.stringify(data[1]));
                 var numSearchResults = data[0];
                 
-                
-                console.log("Page Number: ", pageNumber);
-                // console.log("Data: ", searchData);
                 //Condition 1: the results fit all on the first page.
                 if(((pageNumber * pageSize) > numSearchResults) && pageNumber == 1){
                     nextBtn.classList.add('disabled');
@@ -145,12 +146,12 @@
                     nextBtn.classList.remove('disabled');
                     prevBtn.classList.add('disabled');
                 }
-                //Condition 2: The results can continue on page 2
+                //Condition 3: The results can continue on page 2
                 else if(((pageNumber * pageSize) < numSearchResults) && pageNumber > 1){
                     nextBtn.classList.remove('disabled');
                     prevBtn.classList.remove('disabled');
                 }
-                //Condition 2: The results can continue on page 2
+                //Condition 4: The results can continue on page 2
                 else if(((pageNumber * pageSize) > numSearchResults) && pageNumber > 1){
                     nextBtn.classList.add('disabled');
                     prevBtn.classList.remove('disabled');
@@ -181,6 +182,7 @@
                 var infoAnchor = document.createElement('a');
                 var beginTerm = (tempData[i].term_begin_date == '0000-00-00') ? 'NA' : moment(tempData[i].term_begin_date).format('MMM D, YYYY');
                 var endTerm = (tempData[i].term_end_date == '0000-00-00') ? 'NA' : moment(tempData[i].term_end_date).format('MMM D, YYYY');
+                
                 infoAnchor.setAttribute('onclick', `viewMoreInfo(${tempData[i].id}, 1)`);
                 //Assign values to <td>'s
                 tdName.innerHTML = tempData[i].last_name + ', ' + tempData[i].first_name;
@@ -241,13 +243,20 @@
             // let url = `https://localhost:7019/api/JudicialHistory/Search/${id}`;
             //Production
             let url = `https://publicaccess.nvsupremecourt.us/WebSupplementalAPI/api/JudicialHistory/Search/${id}`;
-            fetch(url)
+            fetch(url, {
+                method: 'GET',
+                headers: {
+                    'XApiKey': '080d4202-61b2-46c5-ad66-f479bf40be11'
+                },
+            })
             .then((response) => response.json())
             .then((data) => {
                 searchData = JSON.parse(JSON.stringify(data));
                 console.log("Judge: ", searchData);
+
                 viewMore.classList.remove('add-opacity');
                 loader[2].classList.add('hide-div');
+
                 var nameP = document.getElementById('judge-name');
                 var positionP = document.getElementById('judge-position');
                 var courtP = document.getElementById('judge-court');
@@ -257,12 +266,20 @@
                 var entreasonnameP = document.getElementById('judge-entreasonname');
                 var termreasonnameP = document.getElementById('judge-termreasonname');
                 var commentsP = document.getElementById('judge-comments');
+
+
                 var beginTerm = (searchData.term_begin_date == '0000-00-00') ? 'NA' : moment(searchData.term_begin_date).format('MMM D, YYYY');
+
                 var endTerm = (searchData.term_end_date == '0000-00-00') ? 'NA' : moment(searchData.term_end_date).format('MMM D, YYYY');
+
                 nameP.innerHTML = `<b>Name:</b> ${searchData.first_name} ${searchData.middle_name} ${searchData.last_name}`;
+
                 positionP.innerHTML = `<b>Judicial Position:</b> ${searchData.judicial_pos}`;
+
                 courtP.innerHTML = `<b>Court:</b> ${searchData.courtName}`;
+
                 (searchData.county == "") ? countyP.innerHTML = '<b>County:</b> NA' : countyP.innerHTML = `<b>County:</b> ${searchData.county}`;
+                
                 (searchData.election_date == "0000-00-00") ? electionP.innerHTML = `<b>Election Date:</b> NA` : electionP.innerHTML = `<b>Election Date:</b> ${moment(searchData.election_date).format('MMM D, YYYY')}`;
 
                 termP.innerHTML = `<b>Term:</b> ${beginTerm} - ${endTerm}`;

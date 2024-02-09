@@ -45,12 +45,13 @@
         //courtType variables is used hold the type_id of the court type. In production, we'll locate the end of the url path and determine if the page should be rendering District, Municipal, or Municipal Courts. Additionally, when the court type is determined, the type ID of that court type is saved in the courtType variable, which is used in the HTTP call to the API.
         let courtType = 0;
         let urlString = window.location.pathname.split("/").pop();
+
         urlString = urlString.replace('_', ' ');
         urlString = urlString.toLowerCase()
                     .split(' ')
                     .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
                     .join(' ');
-        
+
         if(urlString == 'District Courts'){
             courtType = 1;
         }else if(urlString == 'Justice Courts'){
@@ -71,7 +72,12 @@
             // let url = 'https://localhost:7019/api/FindACourt/1' // Dev
             clearContents();
             loaderSwitch(1);
-            fetch(url)
+            fetch(url, {
+                method: 'GET',
+                headers: {
+                    'XApiKey': '080d4202-61b2-46c5-ad66-f479bf40be11'
+                },
+            })
             .then((response) => {
                 if(response.ok){
                     return response.json();
@@ -82,7 +88,9 @@
                 //Succesfully API call
 
                 let p = document.createElement("p");
+                //<p>Hello!</p>
                 p.innerHTML = "Nevada has eleven judicial districts making up the state's general jurisdiction courts. These district courts serve Nevada's 17 counties. The 11 Judicial Districts are served by 82 District Court judges who serve their elected counties but have jurisdiction to serve in any district court in the state.";
+
                 tableWrapper.appendChild(p);
 
                 //Iterate through all of the courts, add the classes that Squiz currently used to style the pages, and append the elements starting with the innermost child and work our way to the dynamic table element.
@@ -145,8 +153,13 @@
             //Override the page header with the court name.
             document.getElementsByClassName('highlighted')[0].innerHTML = courtName;
             let url = `https://publicaccess.nvsupremecourt.us/WebSupplementalAPI/api/FindACourt/Court/${courtID}`; //Production
-            // let url = `https://localhost:7019/api/FindACourt/Court/1`;//DEV
-            fetch(url)
+            // let url = `https://localhost:7019/api/FindACourt/Court/${courtID}`;//DEV
+            fetch(url, {
+                method: 'GET',
+                headers: {
+                    'XApiKey': '080d4202-61b2-46c5-ad66-f479bf40be11'
+                },
+            })
             .then((response) => {
                 if(response.ok){
                     return response.json();

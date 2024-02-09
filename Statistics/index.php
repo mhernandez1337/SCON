@@ -40,7 +40,12 @@
             //  url = 'https://localhost:7019/api/Statistics/YearSelection';
             //Production
             url = 'https://publicaccess.nvsupremecourt.us/WebSupplementalAPI/api/Statistics/YearSelection';
-            fetch(url)
+            fetch(url, {
+                method: 'GET',
+                headers: {
+                    'XApiKey': '080d4202-61b2-46c5-ad66-f479bf40be11'
+                },
+            })
             .then((response) => response.json())
             .then((data) => {
                 yearObject = data;
@@ -71,7 +76,12 @@
             // url = 'https://localhost:7019/api/Courts';
             //Production
             url = 'https://publicaccess.nvsupremecourt.us/WebSupplementalAPI/api/Courts';
-            fetch(url)
+            fetch(url, {
+                method: 'GET',
+                headers: {
+                    'XApiKey': '080d4202-61b2-46c5-ad66-f479bf40be11'
+                },
+            })
             .then((response) => response.json())
             .then((data) => {
                 var courts = data;
@@ -160,12 +170,17 @@
                         //Production
                         url = `https://publicaccess.nvsupremecourt.us/WebSupplementalAPI/api/Statistics/${checkedCourts[0].value}/${checkedCourts[1].value}/${yearSelection[0].value}`;
                     }
-                    fetch(url)
+                    fetch(url, {
+                        method: 'GET',
+                        headers: {
+                            'XApiKey': '080d4202-61b2-46c5-ad66-f479bf40be11'
+                        },
+                    })
                     .then((response) => response.json())
                     .then((data) => {
                         //Convert the response data to a json variable.
                         tableData = JSON.parse(JSON.stringify(data));
-                        console.log("tableData: ", tableData);
+                        // console.log("tableData: ", tableData);
                         
                         //Add the year to the first table header
                         document.getElementById('title-column-fiscal-year').innerHTML = `Fiscal year ${yearSelection[0].value}`;
@@ -317,7 +332,12 @@
                             //Production
                             url = `https://publicaccess.nvsupremecourt.us/WebSupplementalAPI/api/Statistics/Line/${checkedCourts[0].value}`;
 
-                            fetch(url)
+                            fetch(url, {
+                                method: 'GET',
+                                headers: {
+                                    'XApiKey': '080d4202-61b2-46c5-ad66-f479bf40be11'
+                                },
+                            })
                             .then((response) => response.json())
                             .then((data) => {
                                 tableData = JSON.parse(JSON.stringify(data));
@@ -337,7 +357,7 @@
                                 var seriesDisposVariable = [];
                                 var categories = [];
 
-                                //Iterate through all the returned data and plae them into the correct filing and dispo arrays
+                                //Iterate through all the returned data and place them into the correct filing and dispo arrays
                                 for(var i = tableData.length - 1; i >= 0 ; i--){
                                     civilFilings[(tableData.length -1) - i] = tableData[i].civilFilings;
                                     crimFilings[(tableData.length -1) - i] = tableData[i].crimFilings;
@@ -603,7 +623,10 @@
                             //For the bar, we use a POST http call. We add a body which contains all of the court ID options, which will be interpreted by the API
                             fetch(url, {
                                 method: "POST",
-                                headers: { "Content-Type": "application/json" },
+                                headers: { 
+                                    "Content-Type": "application/json",
+                                    'XApiKey': '080d4202-61b2-46c5-ad66-f479bf40be11' 
+                                },
                                 body: JSON.stringify({
                                     courtIDs: tempCourtIDArray
                                 }),

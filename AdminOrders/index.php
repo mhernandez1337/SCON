@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="../styles.css">
+    <!-- <link rel="stylesheet" href="../styles.css"> -->
     <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
     <script src="https://kit.fontawesome.com/4eb1d74c79.js" crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css2?family=Asap:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -15,9 +15,64 @@
     <title>Adminstrative Orders</title>
 </head>
 <body>
+    <style>
+        @media (max-width: 1100px){
+            table {
+                display: block;
+                overflow-x: scroll;
+            }
+        }
+        /* Loading Spinner */
+        /* Safari */
+        @-webkit-keyframes spin {
+            0% { -webkit-transform: rotate(0deg); }
+            100% { -webkit-transform: rotate(360deg); }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loader {
+            border: 16px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 16px solid #00629d;
+            width: 120px;
+            height: 120px;
+            -webkit-animation: spin 2s linear infinite; /* Safari */
+            animation: spin 2s linear infinite;
+            position: absolute;
+            margin: 0 auto;
+            right: 0;
+            left: 0;
+            top: 33%;
+            z-index: 10000;
+            transform: translate(50%,50%);
+        }
+
+        .hide-div {
+            visibility: hidden;
+        }
+
+        .display-none {
+            display: none !important;
+        }
+
+        .add-opacity {
+            opacity: 0.5 !important;
+        }
+
+        .container {
+            position: relative;
+            height:250px;
+        }
+    </style>
     <script>
         //Refernce Page: https://nvcourts.gov/supreme/decisions/administrative_orders
         var tableData;
+        var loader = document.getElementsByClassName('loader');
+        var container = document.getElementsByClassName('container');
         let createNewTablesHeaders = function() {
             table = document.createElement('table');
             tr = document.createElement('tr');
@@ -42,9 +97,49 @@
             table.appendChild(tr);
             wrapper.appendChild(table);
         }
+        let requestUrl = function(urlType, key){
+            loaderSwitch(1);
+            let url = `https://publicaccess.nvsupremecourt.us/WebSupplementalAPI/api/urlRequest/${urlType}/${key}`;
+            // let url = `https://localhost:7019/api/urlRequest/${urlType}/${key}`;
+            fetch(url, {
+                method: 'GET',
+                headers: {
+                    'XApiKey': '080d4202-61b2-46c5-ad66-f479bf40be11'
+                },
+            })
+            .then((response) => response.json())
+            .then((data) => {
+                // window.location.replace(data.value);
+                var testTimerId;
+                let autoDirect = function() {
+                    window.location = data.value;
+                    loaderSwitch(0);
+                }
+                testTimerId = window.setTimeout(autoDirect, 30);
+                
+            });
+        }
+        let loaderSwitch = function(turnOffOn){
+            if (turnOffOn) {
+                loader[0].classList.remove('hide-div');
+                // calendar[0].classList.add('add-opacity');
+
+            }else {
+                loader[0].classList.add('hide-div');
+                // calendar[0].classList.remove('add-opacity');
+            }
+        }
         $(document).ready(function() {
             
-            fetch('https://publicaccess.nvsupremecourt.us/WebSupplementalAPI/api/AdminOrders')
+            let url = 'https://publicaccess.nvsupremecourt.us/WebSupplementalAPI/api/AdminOrders';
+            // let url = 'https://localhost:7019/api/AdminOrders';
+            loaderSwitch(1);
+            fetch(url, {
+                method: 'GET',
+                headers: {
+                    'XApiKey': '080d4202-61b2-46c5-ad66-f479bf40be11'
+                },
+            })
             .then((response) => response.json())
             .then((data) => {
                 tableData = JSON.parse(JSON.stringify(data));
@@ -83,12 +178,20 @@
                             tr.appendChild(td);
                         }
                         else if(childKey == 'docurl' || childKey == 'caseurl'){
+                            let urlType = ""
+                            if(childKey == 'docurl'){
+                                urlType = "doc";
+                            }else{
+                                urlType = "case";
+                            }
+
                             tr.appendChild(td);
                             previousTd = td.previousElementSibling;
                             // Create the new anchor tag
                             anchor = td.previousElementSibling.children[0];
-                            anchor.setAttribute('href', childValue);
-                            anchor.setAttribute('target', "_blank");
+                            anchor.setAttribute('href', "javascript:;");
+                            anchor.setAttribute('onclick', `requestUrl("${urlType}", "${childValue}")`)
+                            //anchor.setAttribute('target', "_blank");
                             anchor.innerHTML = previousTd.innerHTML;
                             
                             td.remove();
@@ -106,13 +209,17 @@
                         }
                     }
                 }
-
+                loaderSwitch(0);
+                container[0].style.height = "auto";
             });
+            
         });
+        
         // console.log("Data: ", tableData);dynamic-table-header
 
     </script>
     <div class="container">
+        <div class="loader hide-div"></div>
         <div id="dynamic-table-wrapper"></div>
     </div>
     

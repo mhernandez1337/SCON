@@ -55,9 +55,10 @@
             initializeEvents = function() {
                 var eventsListing = [6];
                 var monthEvents = [];
-                var currentDate = moment(new Date()).format('MM/DD/YYYY');
-                var maxDate = moment(currentDate).add(1, 'months').format('MM/DD/YYYY');
-                
+                var currentDate = moment(new Date()).subtract(1, "days").format('MM/DD/YYYY');
+                var maxDate = moment(currentDate).add(2, 'M').subtract(1, "days").format('MM/DD/YYYY');
+                console.log("Max Date:", maxDate);
+                console.log("Current Date:", currentDate);
                 //Create the container that will hold all the events
                 var divEvent = document.createElement('div');
                 divEvent.setAttribute('class', 'multicolumn-boxes-item__contents-text');
@@ -66,33 +67,34 @@
                 var ulEvent = document.createElement('ul');
                 ulEvent.setAttribute('class', 'multicolumn-boxes-list');
 
-
-
                 for(let i = 0; i < oralArgEvents.length; i++){
                     //Grab the first two characters of the duration string, which is the length of the event (30 mins turns into 30(integer))
                     var duration = parseInt((oralArgEvents[i].duration).substr(0,2));
                     //Returns a moment object and our end time is attribute '_d'
                     var start = moment(oralArgEvents[i].start).format('MM/DD/YYYY');
-                    if(start > currentDate && start < maxDate){
+                    if(moment(start).isAfter(currentDate) && moment(start).isBefore(maxDate)){
+                        console.log("Test");
                         monthEvents.push(oralArgEvents[i]);
                     }
                 }
                 for(let i = 0; i < supremeCourtEvents.length; i++){
                     var start = moment(supremeCourtEvents[i].start).format('MM/DD/YYYY');
-                    if(start > currentDate && start < maxDate){
+                    if(moment(start).isAfter(currentDate) && moment(start).isBefore(maxDate)){
                         monthEvents.push(supremeCourtEvents[i]);
                     }
                 }
                 for(let i = 0; i < adktHearings.length; i++){
                     var start = moment(adktHearings[i].start).format('MM/DD/YYYY');
-                    if(start > currentDate && start < maxDate){
+                    if(moment(start).isAfter(currentDate) && moment(start).isBefore(maxDate)){
                         monthEvents.push(adktHearings[i]);
                     }
                 }
 
                 //Sort the events by most recent. 
                 var eventLength;
-                (monthEvents.length > 4) ? eventLength = 4 : eventLength = monthEvents.length;
+                //If there are more than five events in total, set the event length to only display the five most current events. The events will be set to however many events are saved if less than five.
+                (monthEvents.length > 5) ? eventLength = 5 : eventLength = monthEvents.length;
+                //Sort the events by most current
                 monthEvents.sort((a,b) => new Date(a.start).getTime() - new Date(b.start).getTime())
                 for(let i = 0; i < eventLength; i++){
 
@@ -120,34 +122,37 @@
                 }
                 divEvent.appendChild(ulEvent);
                 listingContainer.appendChild(divEvent);
-                console.log("Monthly Events: ", monthEvents);
+                // console.log("Monthly Events: ", monthEvents);
                 loaderSwitch(0);
             }
-            
-            async function fetchEvents() {
+            fetchEvents = function() {
                 // loader[0].classList.remove('hide-div');
                 // calendar[0].classList.add('add-opacity');
                 loaderSwitch(1);
-                await fetch(oralArgEventsURL)
+                fetch(oralArgEventsURL, {
+                    method: 'GET',
+                    headers: {
+                        'XApiKey': '080d4202-61b2-46c5-ad66-f479bf40be11'
+                    },
+                })
                 .then((response) => response.json())
                 .then((data) => {
                     oralArgEvents = data;
                     // console.log("Oral Argument Events:", oralArgEvents);
+                    fetch(supremeCourtEventsURL)
+                    .then((response) => response.json())
+                    .then((data) => {
+                        supremeCourtEvents = data;
+                        // console.log("Supreme Court Events:", supremeCourtEvents);
+                        fetch(adktHearingsURL)
+                        .then((response) => response.json())
+                        .then((data) => {
+                            adktHearings = data;
+                            // console.log("ADKT Hearings:", adktHearings);
+                            initializeEvents();
+                        });
+                    });
                 });
-                await fetch(supremeCourtEventsURL)
-                .then((response) => response.json())
-                .then((data) => {
-                    supremeCourtEvents = data;
-                    // console.log("Supreme Court Events:", supremeCourtEvents);
-                });
-                await fetch(adktHearingsURL)
-                .then((response) => response.json())
-                .then((data) => {
-                    adktHearings = data;
-                    // console.log("ADKT Hearings:", adktHearings);
-                    
-                });
-                initializeEvents();
             }
             fetchEvents();
         });

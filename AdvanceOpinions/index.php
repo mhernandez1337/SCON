@@ -15,6 +15,14 @@
     <title>Advance Opinions</title>
 </head>
 <body>
+    <style>
+        @media (max-width: 1100px){
+            table {
+                display: block;
+                overflow-x: scroll;
+            }
+        }
+    </style>
     <script>
         //Reference Page: https://nvcourts.gov/supreme/decisions/advance_opinions
         var tableData;
@@ -42,11 +50,37 @@
             table.appendChild(tr);
             wrapper.appendChild(table);
         }
+        let requestUrl = function(urlType, key){
+            // let url = `https://publicaccess.nvsupremecourt.us/WebSupplementalAPI/api/urlRequest/${urlType}/${key}`;
+            let url = `https://localhost:7019/api/urlRequest/${urlType}/${key}`;
+            fetch(url, {
+                method: 'GET',
+                headers: {
+                    'XApiKey': '080d4202-61b2-46c5-ad66-f479bf40be11'
+                },
+            })
+            .then((response) => response.json())
+            .then((data) => {
+                // window.location.replace(data.value);
+                var testTimerId;
+                let autoDirect = function() {
+                    window.location = data.value;
+                }
+                testTimerId = window.setTimeout(autoDirect, 30);
+                
+            });
+        }
         $(document).ready(function() {
             //Local development
-            fetch('https://localhost:7019/api/AdvanceOpinions')
+            let url = 'https://localhost:7019/api/AdvanceOpinions';
             //Production
-            // fetch('https://publicaccess.nvsupremecourt.us/WebSupplementalAPI/api/AdvanceOpinions')
+            // let url = 'https://publicaccess.nvsupremecourt.us/WebSupplementalAPI/api/AdvanceOpinions'
+            fetch(url, {
+                method: 'GET',
+                headers: {
+                    'XApiKey': '080d4202-61b2-46c5-ad66-f479bf40be11'
+                },
+            })
             .then((response) => response.json())
             .then((data) => {
                 tableData = JSON.parse(JSON.stringify(data));
@@ -85,12 +119,19 @@
                             td.appendChild(a);
                             tr.appendChild(td);
                         } else if(childKey == 'docurl' || childKey == 'caseurl'){
+                            let urlType = ""
+                            if(childKey == 'docurl'){
+                                urlType = "doc";
+                            }else{
+                                urlType = "case";
+                            }
                             tr.appendChild(td);
                             previousTd = td.previousElementSibling;
                             // Create the new anchor tag
                             anchor = td.previousElementSibling.children[0];
-                            anchor.setAttribute('href', childValue);
-                            anchor.setAttribute('target', "_blank");
+                            anchor.setAttribute('href', "javascript:;");
+                            anchor.setAttribute('onclick', `requestUrl("${urlType}", "${childValue}")`)
+                            //anchor.setAttribute('target', "_blank");
                             if(childKey == 'docurl'){
                                 // let date = new Date(childValue);
                                 // console.log("Date: ", date);
